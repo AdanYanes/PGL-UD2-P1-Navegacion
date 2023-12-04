@@ -2,7 +2,13 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-const Welcome = () => {
+interface WelcomeProps {
+  setIsLoging: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const Welcome: React.FC<WelcomeProps> = ({
+  setIsLoging: setIsLogging
+}) => {
   return (
     <View style={styles.backgroundColor}>
       <View>
@@ -19,6 +25,7 @@ const Welcome = () => {
           size={64}
           style={{alignSelf: "center"}}
           color={'#F5B40C'}
+          onPress={() => setIsLogging(true)}
         />
       </View>
     </View>
