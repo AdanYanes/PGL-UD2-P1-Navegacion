@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
-import {Data} from '../data/Data'
+import {DefaultCredential} from '../data/Credentials'
 
 interface LoginProps {
     setIsLoged: React.Dispatch<React.SetStateAction<boolean>>
@@ -13,7 +13,7 @@ const Login: React.FC<LoginProps> = ({
     const [password, setPassword] = useState("");
 
     function checkUserData(){
-        if(Data.username === username && Data.password === password){
+        if(DefaultCredential.username === username && DefaultCredential.password === password){
             setIsLoged(true)
         }else{
             alert("Credentials are not correct");
