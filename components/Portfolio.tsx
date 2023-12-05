@@ -4,22 +4,13 @@ import { StyleSheet, Image, View, Pressable, ImageProps } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CardList from "./CardList";
 import QR from "./QR";
-import { CardData, ProfileData } from "../data/CardTypes";
+import {profileData} from "../data/MyInfo"
+import {ProfileData} from "../data/CardTypes";
 import { BottomTabNavigationOptions, createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-interface PortfolioProps {
-  isLightMode: boolean
-  profileData: ProfileData;
-}
 
 const Tab = createBottomTabNavigator();
 
-const Portfolio: React.FC<PortfolioProps> = ({
-  isLightMode: isLightMode,
-  profileData: profileData,
-}) => {
-  const [displayAboutMe, setDisplayAboutMe] = useState(true);
-
+const Portfolio = () => {
   const ProfileTabOptions = ({ color }: { color: string }): BottomTabNavigationOptions => {
   return ({
     tabBarIcon: ({ focused }) => (
@@ -55,16 +46,16 @@ const QRTabOptions = ({ color }: { color: string }): BottomTabNavigationOptions 
   }
 
   return (
-    <View style={[styles.body, (isLightMode? styles.backgroundLight: styles.backgroundDark)]}>
+    <View style={[styles.body, styles.backgroundLight]}>
       <View>
         <View>
-          <Image style={[styles.avatar, (isLightMode? styles.borderColorLight: styles.borderColorDark)]} source={profileData.image}></Image>
-          <View style={[styles.iconView, (isLightMode? styles.borderColorLight : styles.borderColorDark), (isLightMode? {backgroundColor: '#D00DF5'}: {backgroundColor: 'black'})]}>
+          <Image style={[styles.avatar, styles.borderColorLight]} source={profileData.image}></Image>
+          <View style={[styles.iconView, styles.borderColorLight, {backgroundColor: '#D00DF5'}]}>
             <Ionicons
               name="repeat-outline"
               size={30}
               style={styles.icon}
-              color={(isLightMode? '#F5B40C' : '#D9D9D9')}
+              color={'#F5B40C'}
             />
           </View>
         </View>

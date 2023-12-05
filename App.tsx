@@ -6,6 +6,7 @@ import Portfolio from './components/Portfolio';
 import {profileData} from "./data/MyInfo";
 import Header from './components/Header';
 import { NavigationContainer } from '@react-navigation/native';
+import CustomDrawer from './components/CustomDrawer';
 
 export default function App() {
   const [isLoging, setIsLoging] = useState(false);
@@ -15,13 +16,7 @@ export default function App() {
   return (
     <View style={styles.appContainer}>
       {isLoged ? (
-        <NavigationContainer>
-          <Header/>
-          <Portfolio
-            isLightMode={isLightMode}
-            profileData={profileData}
-          />
-        </NavigationContainer>
+        <CustomDrawer/>
       ) : (
         isLoging ? (
           <Login setIsLoged={setIsLoged} />

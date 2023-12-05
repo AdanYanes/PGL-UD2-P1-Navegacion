@@ -1,15 +1,23 @@
 import { StyleSheet, Text, View } from 'react-native'
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React from 'react'
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { ParamListBase } from '@react-navigation/routers/src/types';
 
-const Header = () => {
+type HeaderProps = {
+  navigation: DrawerNavigationProp<ParamListBase>
+}
+
+const Header = ({navigation}: HeaderProps) => {
+  const openDrawer = () => navigation.openDrawer();
   return (
     <View style={styles.topContainer}>
       <Ionicons
       name={"menu-outline"}
-      size={90}
+      size={70}
       style={{alignSelf: "center"}}
-      color={"#D9D9D9"}>
+      color={"#D9D9D9"}
+      onPress={openDrawer}>
       </Ionicons>
       <Text style={styles.textStyle}>Adan's Portfolio</Text>
     </View>
@@ -26,7 +34,6 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#D00DF5",
     paddingLeft: 20,
-    flex: 3
   },
   textStyle:{
     fontSize: 35,
