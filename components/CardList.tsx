@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import Card from "./Card";
 import {cardsData} from "../data/MyInfo"
-import { CardData} from "../data/CardTypes";
+import {CardData} from "../data/CardTypes";
 
 
 
