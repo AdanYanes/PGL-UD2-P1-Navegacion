@@ -1,56 +1,64 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useState } from 'react'
-import {DefaultCredential} from '../data/Credentials'
+import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { DefaultCredential } from '../data/Credentials';
+import { LoginContext } from '../contexts/LoginContext'; // Ajusta la ruta según tu estructura de archivos
 
 interface LoginProps {
-    setIsLoged: React.Dispatch<React.SetStateAction<boolean>>
+  setIsRegistering: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Login: React.FC<LoginProps> = ({
-    setIsLoged: setIsLoged
-}) => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+const Login: React.FC<LoginProps> = ({ setIsRegistering }) => {
+  const { toggleIsLoged } = useContext(LoginContext);
 
-    function checkUserData(){
-        if(DefaultCredential.username === username && DefaultCredential.password === password){
-            setIsLoged(true)
-        }else{
-            alert("Credentials are not correct");
-        }
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  function checkUserData() {
+    if (DefaultCredential.username === username && DefaultCredential.password === password) {
+      toggleIsLoged(true);
+    } else {
+      alert('Credentials are not correct');
     }
+  }
 
-    return (
-        <View style={styles.backgroundColor}>
-          <View>
-            <View style={styles.lightDiamond}></View>
-            <View style={styles.darkDiamond}></View>
-          </View>
-          <View style={styles.logInContainer}>
-            <Text>Hola</Text>
-            <TextInput
-                placeholder="Username"
-                value={username}
-                style={styles.logInInput}
-                onChangeText={setUsername}>
-            </TextInput>
-            <TextInput
-                placeholder="Password"
-                value={password}
-                style={styles.logInInput}
-                onChangeText={setPassword}>
-            </TextInput>
-            <Pressable
-            style={styles.logInButton}
-            onPress={checkUserData}>
-                <Text style={styles.logInText}>Log In!</Text>
-            </Pressable>
-          </View>
+  function changeToRegistration() {
+    setIsRegistering(true);
+  }
+
+  return (
+    <View style={styles.backgroundColor}>
+      <View>
+        <View style={styles.lightDiamond}></View>
+        <View style={styles.darkDiamond}></View>
+      </View>
+      <KeyboardAvoidingView behavior={'height'} style={styles.logInContainer}>
+        <TextInput
+          placeholder="Username"
+          value={username}
+          style={styles.logInInput}
+          onChangeText={setUsername}
+        ></TextInput>
+        <TextInput
+          placeholder="Password"
+          value={password}
+          style={styles.logInInput}
+          onChangeText={setPassword}
+        ></TextInput>
+        <View style={{ alignItems: 'center' }}>
+          <Text>Don't have an account?</Text>
+          <Pressable style={{}} onPress={changeToRegistration}>
+            <Text style={{ color: 'blue' }}>Create an account here!</Text>
+          </Pressable>
         </View>
-      )
-}
+        <Pressable style={styles.logInButton} onPress={checkUserData}>
+          <Text style={styles.logInText}>Log In!</Text>
+        </Pressable>
+      </KeyboardAvoidingView>
+    </View>
+  );
+};
 
-export default Login
+export default Login;
 
 const styles = StyleSheet.create({
     backgroundColor:{
@@ -80,7 +88,7 @@ const styles = StyleSheet.create({
     },
     logInContainer:{
       position: "absolute",
-      top: "30%",
+      top: 215,
       alignItems: "center"
     },
     logInInput:{
