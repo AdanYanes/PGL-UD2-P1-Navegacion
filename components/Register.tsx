@@ -2,6 +2,7 @@ import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } fr
 import React, { useContext, useState } from 'react'
 import {DefaultCredential} from '../data/Credentials'
 import { LoginContext } from '../contexts/LoginContext'
+import { postRegister } from '../services/loginService'
 
 interface RegisterProps {
     setIsRegistering: React.Dispatch<React.SetStateAction<boolean>>
@@ -15,18 +16,21 @@ const Register: React.FC<RegisterProps> = ({
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
 
-    function checkUserData(){
-        if(DefaultCredential.username === username && DefaultCredential.password === password){
-            toggleIsLoged(true)
-            setIsRegistering(false)
-        }else{
-            alert("Credentials are not correct");
-        }
-    }
-
     function changeToLogin(){
         setIsRegistering(false)
     }
+
+    const fetchRegister = () => {
+        const fetchData = async () => {
+          const loginCodeResponse: string = await postRegister(username,email, password);
+          if(loginCodeResponse == "201"){
+            toggleIsLoged(true)
+          }else{
+            alert("Credentials are not correct");
+          }
+        }
+        fetchData();
+      }
 
     return (
         <View style={styles.backgroundColor}>
@@ -62,13 +66,13 @@ const Register: React.FC<RegisterProps> = ({
                 <Pressable
                     style={{}}
                     onPress={changeToLogin}>
-                        <Text style={{color: 'blue'}}>Log in here!</Text>
+                        <Text style={{color: 'blue'}}>Sign in here!</Text>
                 </Pressable>
             </View>
             <Pressable
             style={styles.registerButton}
-            onPress={checkUserData}>
-                <Text style={styles.registerText}>Log In!</Text>
+            onPress={fetchRegister}>
+                <Text style={styles.registerText}>Sign up!</Text>
             </Pressable>
           </KeyboardAvoidingView>
         </View>

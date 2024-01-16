@@ -1,7 +1,7 @@
 import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import React, { useContext, useState } from 'react';
-import { DefaultCredential } from '../data/Credentials';
 import { LoginContext } from '../contexts/LoginContext'; // Ajusta la ruta según tu estructura de archivos
+import { postLogin } from '../services/loginService';
 
 interface LoginProps {
   setIsRegistering: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,17 +12,23 @@ const Login: React.FC<LoginProps> = ({ setIsRegistering }) => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  let [loginCode, setLoginCode] = useState<string>("");
 
-  function checkUserData() {
-    if (DefaultCredential.username === username && DefaultCredential.password === password) {
-      toggleIsLoged(true);
-    } else {
-      alert('Credentials are not correct');
-    }
-  }
 
   function changeToRegistration() {
     setIsRegistering(true);
+  }
+
+  const fetchLogin = () => {
+    const fetchData = async () => {
+      const loginCodeResponse: string = await postLogin(username, password);
+      if(loginCodeResponse == "200"){
+        toggleIsLoged(true)
+      }else{
+        alert("Credentials are not correct");
+      }
+    }
+    fetchData();
   }
 
   return (
@@ -50,8 +56,8 @@ const Login: React.FC<LoginProps> = ({ setIsRegistering }) => {
             <Text style={{ color: 'blue' }}>Create an account here!</Text>
           </Pressable>
         </View>
-        <Pressable style={styles.logInButton} onPress={checkUserData}>
-          <Text style={styles.logInText}>Log In!</Text>
+        <Pressable style={styles.logInButton} onPress={fetchLogin}>
+          <Text style={styles.logInText}>Sign In!</Text>
         </Pressable>
       </KeyboardAvoidingView>
     </View>
