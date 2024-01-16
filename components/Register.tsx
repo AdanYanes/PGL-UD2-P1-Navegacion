@@ -26,7 +26,7 @@ const Register: React.FC<RegisterProps> = ({
           if(loginCodeResponse == "201"){
             toggleIsLoged(true)
           }else{
-            alert("Credentials are not correct");
+            alert("Username or email already exist!");
           }
         }
         fetchData();
