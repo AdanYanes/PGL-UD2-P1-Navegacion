@@ -12,7 +12,7 @@ const Logout = () => {
         if(loginCodeResponse == "200"){
           toggleIsLoged(false)
         }else{
-          alert("Fatal error. Cant logout");
+          alert("Fatal error. Can't logout");
         }
       }
       fetchData();

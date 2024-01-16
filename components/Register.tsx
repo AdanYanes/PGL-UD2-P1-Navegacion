@@ -25,6 +25,7 @@ const Register: React.FC<RegisterProps> = ({
           const loginCodeResponse: string = await postRegister(username,email, password);
           if(loginCodeResponse == "201"){
             toggleIsLoged(true)
+            setIsRegistering(false)
           }else{
             alert("Username or email already exist!");
           }
