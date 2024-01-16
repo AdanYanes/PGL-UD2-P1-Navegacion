@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Header from './Header';
 import Portfolio from './Portfolio';
 import Test from '../scenes/Test';
+import Logout from '../scenes/Logout';
 
 const Drawer = createDrawerNavigator();
 
@@ -29,6 +30,7 @@ const CustomDrawer = () => {
       >
         <Drawer.Screen name='Profile' component={Portfolio} options={{ title: 'Portfolio' }} />
         <Drawer.Screen name='Test' component={Test} options={{ title: 'Test' }} />
+        <Drawer.Screen name='Logout' component={Logout} options={{ title: 'Logout' }} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
