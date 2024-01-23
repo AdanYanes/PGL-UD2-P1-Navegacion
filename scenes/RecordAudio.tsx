@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { Audio } from 'expo-av';
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -67,44 +67,48 @@ const RecordAudio = () => {
   }
 
   function getRecordingLines() {
+    const [isPlayingList, setIsPlayingList] = useState(recordingList.map(() => false));
+
+    const playRecordFile = async (recordFile: RecordingFile, index: number): Promise<void> => {
+      const playObject = new Audio.Sound();
+      await playObject.loadAsync({ uri: recordFile.uri });
+      await playObject.playAsync();
+  
+      const newIsPlayingList = [...isPlayingList];
+      newIsPlayingList[index] = true;
+      setIsPlayingList(newIsPlayingList);
+    };
+
+    const deleteRecordFile = async (indexToRemove: number): Promise<void> =>{
+      const newRecordingList = recordingList.filter((_, index) => index !== indexToRemove);
+      setRecordingList(newRecordingList);
+    }
     return recordingList.map((recordingLine, index) => {
-      //const [isPlaying, setIsPlaying] = useState(false);
       return (
         <View>
-          
           <View style={styles.recorder}>
             <Text>Recording {index + 1} - {recordingLine.duration} </Text>
-            {/* {isPlaying ?
-              (<Ionicons
-                name="stop-circle-outline"
+            <TouchableOpacity style={{flexDirection: "row"}} >
+              <Ionicons
+                  name={"trash-outline"}
+                  size={30}
+                  color={'#F5B40C'}
+                  onPress={() => deleteRecordFile(index)}
+                />
+              <Ionicons
+                name={isPlayingList[index] ? 'stop-circle-outline' : 'play-circle-outline'}
                 size={30}
                 color={'#F5B40C'}
+                style={{paddingLeft: 20}}
+                onPress={() => playRecordFile(recordingLine, index)}
               />
-              ) : (
-                <Ionicons
-                  name="play-circle-outline"
-                  size={30}
-                  color={'#F5B40C'}
-                  onPress={() => playRecordFile(recordingLine)}
-                />
-              )} */}
-              <Ionicons
-                  name="play-circle-outline"
-                  size={30}
-                  color={'#F5B40C'}
-                  onPress={() => playRecordFile(recordingLine)}
-                />
+            </TouchableOpacity>
           </View>
         </View>
       )
     })
   }
 
-  const playRecordFile = async (recordFile: RecordingFile): Promise<void> => {
-    const playObject = new Audio.Sound();
-    await playObject.loadAsync({ uri: recordFile.uri });
-    await playObject.playAsync();
-  };
 
   return (
     <View>
