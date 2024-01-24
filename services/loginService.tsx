@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LOGIN_API_URL = 'http://172.16.100.181:8888';
+const LOGIN_API_URL = 'http://172.16.100.252:8888';
 const LOGIN_PATH = '/users/login';
 const REGISTER_PATH = '/users/register'
 const LOGOUT_PATH = '/users/logout'
